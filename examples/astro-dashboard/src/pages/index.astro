@@ -1,0 +1,26 @@
+---
+import UnifeatherDashboard from "@unifeather/dashboard/UnifeatherDashboard.vue";
+
+// Point at your collector's stats endpoint. Same-origin path shown here;
+// use an absolute URL if the collector runs elsewhere.
+const apiUrl = "/api/stats";
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>unifeather dashboard</title>
+  </head>
+  <body>
+    <main style="max-width: 820px; margin: 2rem auto; padding: 0 1rem;">
+      <h1>Analytics</h1>
+
+      <!--
+        `client:load` hydrates the Vue component in the browser (an island).
+        Other directives work too: client:visible, client:idle.
+      -->
+      <UnifeatherDashboard client:load apiUrl={apiUrl} days={30} />
+    </main>
+  </body>
+</html>

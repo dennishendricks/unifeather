@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>unifeather — snippet example</title>
+
+    <!--
+      Copy-paste tracker. Privacy-friendly default (no cookies, no ids).
+      Serve snippet.global.js from your own host/CDN, or from the endpoint.
+
+      Opt-in attributes (all optional):
+        data-cookie-id            anonymous id in a long-lived cookie
+        data-session              session id in a session cookie
+        data-user-id="user-123"   your own id (e.g. logged-in user)
+        data-props='{"plan":"pro"}'  custom properties on every event
+    -->
+    <script
+      src="https://cdn.example.com/unifeather/snippet.global.js"
+      data-endpoint="https://analytics.example.com/collect"
+      data-session
+      data-props='{"section":"docs"}'
+      defer
+    ></script>
+  </head>
+
+  <body>
+    <h1>unifeather snippet demo</h1>
+    <p>A pageview is sent automatically when the page is hidden/unloaded.</p>
+
+    <!-- The snippet exposes the tracker as window.unifeather for custom events. -->
+    <button id="signup">Sign up</button>
+    <script>
+      document.getElementById("signup").addEventListener("click", () => {
+        window.unifeather?.track("signup", { source: "hero" });
+      });
+    </script>
+  </body>
+</html>

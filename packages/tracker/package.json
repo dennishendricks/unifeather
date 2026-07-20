@@ -1,0 +1,58 @@
+{
+  "name": "@unifeather/tracker",
+  "version": "0.1.0",
+  "description": "Tiny (~1KB) privacy-friendly client-side tracker. Minimal by default; cookie id, session id and custom properties are opt-in.",
+  "type": "module",
+  "license": "MIT",
+  "author": "Dennis Hendricks <dennis@hendricks.rocks>",
+  "keywords": [
+    "analytics",
+    "privacy",
+    "web-analytics",
+    "tracking",
+    "tracker",
+    "browser",
+    "lightweight"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dennishendricks/unifeather.git",
+    "directory": "packages/tracker"
+  },
+  "homepage": "https://github.com/dennishendricks/unifeather#readme",
+  "bugs": "https://github.com/dennishendricks/unifeather/issues",
+  "sideEffects": false,
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./snippet": {
+      "types": "./dist/snippet.d.ts",
+      "import": "./dist/snippet.js",
+      "default": "./dist/snippet.global.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "prepublishOnly": "bun run build",
+    "build": "tsup && tsc --emitDeclarationOnly",
+    "dev": "tsup --watch",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@unifeather/core": "workspace:^"
+  },
+  "devDependencies": {
+    "tsup": "^8.5.1",
+    "typescript": "^7.0.2"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

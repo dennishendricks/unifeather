@@ -1,0 +1,11 @@
+{
+  "name": "unifeather-example-spa-tracker",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@unifeather/tracker": "^0.1.0"
+  },
+  "devDependencies": {
+    "typescript": "^7.0.2"
+  }
+}

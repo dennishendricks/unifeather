@@ -1,0 +1,60 @@
+{
+  "name": "@unifeather/dashboard",
+  "version": "0.1.0",
+  "description": "Minimal Vue dashboard for unifeather stats — embeddable as an Astro island. Ships the SFC as source plus a typed fetch helper.",
+  "type": "module",
+  "license": "MIT",
+  "author": "Dennis Hendricks <dennis@hendricks.rocks>",
+  "keywords": [
+    "analytics",
+    "privacy",
+    "web-analytics",
+    "dashboard",
+    "vue",
+    "astro",
+    "chart.js"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dennishendricks/unifeather.git",
+    "directory": "packages/dashboard"
+  },
+  "homepage": "https://github.com/dennishendricks/unifeather#readme",
+  "bugs": "https://github.com/dennishendricks/unifeather/issues",
+  "sideEffects": false,
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./UnifeatherDashboard.vue": "./src/UnifeatherDashboard.vue"
+  },
+  "files": [
+    "dist",
+    "src"
+  ],
+  "scripts": {
+    "prepublishOnly": "bun run build",
+    "build": "tsup && tsc --emitDeclarationOnly",
+    "dev": "tsup --watch",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@unifeather/core": "workspace:^"
+  },
+  "peerDependencies": {
+    "chart.js": "^4.5.1",
+    "vue": "^3.5.39",
+    "vue-chartjs": "^5.3.4"
+  },
+  "devDependencies": {
+    "tsup": "^8.5.1",
+    "typescript": "^7.0.2"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

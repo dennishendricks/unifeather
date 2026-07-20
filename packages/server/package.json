@@ -1,0 +1,74 @@
+{
+  "name": "@unifeather/server",
+  "version": "0.1.0",
+  "description": "Framework-agnostic tracking endpoint (Web Request→Response) plus storage adapters for Cloudflare Analytics Engine and Drizzle-backed SQL databases.",
+  "type": "module",
+  "license": "MIT",
+  "author": "Dennis Hendricks <dennis@hendricks.rocks>",
+  "keywords": [
+    "analytics",
+    "privacy",
+    "web-analytics",
+    "tracking",
+    "drizzle",
+    "cloudflare",
+    "analytics-engine",
+    "edge"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dennishendricks/unifeather.git",
+    "directory": "packages/server"
+  },
+  "homepage": "https://github.com/dennishendricks/unifeather#readme",
+  "bugs": "https://github.com/dennishendricks/unifeather/issues",
+  "sideEffects": false,
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./analytics-engine": {
+      "types": "./dist/adapters/analytics-engine.d.ts",
+      "import": "./dist/adapters/analytics-engine.js"
+    },
+    "./sql": {
+      "types": "./dist/adapters/sql.d.ts",
+      "import": "./dist/adapters/sql.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "prepublishOnly": "bun run build",
+    "build": "tsup && tsc --emitDeclarationOnly",
+    "dev": "tsup --watch",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@unifeather/core": "workspace:^"
+  },
+  "peerDependencies": {
+    "drizzle-orm": ">=0.45.2"
+  },
+  "peerDependenciesMeta": {
+    "drizzle-orm": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^5.20260715.1",
+    "@electric-sql/pglite": "^0.5.4",
+    "@types/node": "^26.1.1",
+    "drizzle-orm": "^0.45.2",
+    "tsup": "^8.5.1",
+    "typescript": "^7.0.2"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

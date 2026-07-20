@@ -1,0 +1,14 @@
+name = "unifeather-collector"
+main = "src/index.ts"
+compatibility_date = "2026-01-01"
+
+# Analytics Engine dataset. `binding` is the env var name used in code (env.AE);
+# `dataset` is the table name referenced by `datasetName` / in SQL queries.
+[[analytics_engine_datasets]]
+binding = "AE"
+dataset = "unifeather"
+
+# Non-secret var. Set the token as a secret instead:
+#   wrangler secret put CF_API_TOKEN
+[vars]
+CF_ACCOUNT_ID = "your-account-id"

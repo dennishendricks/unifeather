@@ -1,0 +1,48 @@
+{
+  "name": "@unifeather/core",
+  "version": "0.1.0",
+  "description": "Shared types, event normalization, UA parsing and the storage Adapter contract for unifeather.",
+  "type": "module",
+  "license": "MIT",
+  "author": "Dennis Hendricks <dennis@hendricks.rocks>",
+  "keywords": [
+    "analytics",
+    "privacy",
+    "web-analytics",
+    "tracking",
+    "cookieless"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dennishendricks/unifeather.git",
+    "directory": "packages/core"
+  },
+  "homepage": "https://github.com/dennishendricks/unifeather#readme",
+  "bugs": "https://github.com/dennishendricks/unifeather/issues",
+  "sideEffects": false,
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "prepublishOnly": "bun run build",
+    "build": "tsup && tsc --emitDeclarationOnly",
+    "dev": "tsup --watch",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "tsup": "^8.5.1",
+    "typescript": "^7.0.2"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
