@@ -10,9 +10,10 @@
   "scripts": {
     "build": "bun run --filter '@unifeather/core' build && bun run --filter '@unifeather/tracker' build && bun run --filter '@unifeather/server' build && bun run --filter '@unifeather/dashboard' build",
     "dev": "bun run --filter '*' dev",
-    "typecheck": "bun run --filter '*' typecheck",
+    "typecheck": "bun run --filter '@unifeather/core' build && bun run --filter '*' typecheck",
     "test": "bun test",
-    "clean": "rm -rf packages/*/dist packages/*/*.tsbuildinfo"
+    "clean": "rm -rf packages/*/dist packages/*/*.tsbuildinfo",
+    "publish": "bun publish --cwd packages/core && bun publish --cwd packages/tracker && bun publish --cwd packages/server && bun publish --cwd packages/dashboard"
   },
   "devDependencies": {
     "typescript": "^7.0.2"
