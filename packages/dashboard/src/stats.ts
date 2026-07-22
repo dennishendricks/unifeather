@@ -10,11 +10,7 @@ export interface FetchStatsParams {
 }
 
 /** Typed fetch for the `/api/stats` endpoint. Returns the {@link StatsResult}. */
-export const fetchStats = async (
-  apiUrl: string,
-  params: FetchStatsParams = {},
-  init?: RequestInit,
-): Promise<StatsResult> => {
+export const fetchStats = async (apiUrl: string, params: FetchStatsParams = {}, init?: RequestInit): Promise<StatsResult> => {
   const url = new URL(apiUrl, typeof location !== "undefined" ? location.href : undefined);
   for (const [key, value] of Object.entries(params)) {
     if (value !== undefined) url.searchParams.set(key, String(value));

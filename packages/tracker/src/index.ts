@@ -38,8 +38,7 @@ export interface Tracker {
   pageview: (properties?: Properties) => void;
 }
 
-const uuid = (): string =>
-  crypto.randomUUID?.() ?? `${Date.now()}-${Math.random().toString(36).slice(2)}`;
+const uuid = (): string => crypto.randomUUID?.() ?? `${Date.now()}-${Math.random().toString(36).slice(2)}`;
 
 const post = (endpoint: string, payload: RawEvent): void => {
   const body = JSON.stringify(payload);
@@ -58,21 +57,10 @@ const post = (endpoint: string, payload: RawEvent): void => {
  * `cookieId`, `session`, `userId` and `properties` as needed.
  */
 export const createTracker = (options: TrackerOptions): Tracker => {
-  const {
-    endpoint,
-    maxActiveMs = 10 * 60 * 1000,
-    autoTrack = true,
-    includeScreen = true,
-  } = options;
+  const { endpoint, maxActiveMs = 10 * 60 * 1000, autoTrack = true, includeScreen = true } = options;
 
-  const userId =
-    options.userId ??
-    (options.cookieId
-      ? getOrCreateCookieId(typeof options.cookieId === "object" ? options.cookieId : {})
-      : undefined);
-  const sessionId = options.session
-    ? getSessionId(typeof options.session === "object" ? options.session : {})
-    : undefined;
+  const userId = options.userId ?? (options.cookieId ? getOrCreateCookieId(typeof options.cookieId === "object" ? options.cookieId : {}) : undefined);
+  const sessionId = options.session ? getSessionId(typeof options.session === "object" ? options.session : {}) : undefined;
 
   // Foreground/active time accounting (ported from the original ping.ts).
   let activeMs = 0;
@@ -90,8 +78,7 @@ export const createTracker = (options: TrackerOptions): Tracker => {
 
   const track = (name = "pageview", properties?: Properties): void => {
     accumulate();
-    const merged =
-      options.properties || properties ? { ...options.properties, ...properties } : undefined;
+    const merged = options.properties || properties ? { ...options.properties, ...properties } : undefined;
     post(endpoint, {
       eventId: uuid(),
       name,

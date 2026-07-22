@@ -12,10 +12,7 @@ const bool = (value: string | undefined): boolean => value === "" || value === "
  *   data-session              data-props (JSON object)
  */
 export const initFromScript = (script?: HTMLScriptElement): Tracker | undefined => {
-  const el =
-    script ??
-    (document.currentScript as HTMLScriptElement | null) ??
-    document.querySelector<HTMLScriptElement>("script[data-endpoint]");
+  const el = script ?? (document.currentScript as HTMLScriptElement | null) ?? document.querySelector<HTMLScriptElement>("script[data-endpoint]");
   if (!el) return undefined;
 
   const endpoint = el.dataset.endpoint;

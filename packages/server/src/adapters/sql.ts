@@ -167,11 +167,7 @@ export const sqlAdapter = (options: SqlAdapterOptions): Adapter => {
   const stats = async (query: StatsQuery): Promise<StatsResult> => {
     const limit = query.limit ?? 10;
     const bucket = query.interval === "hour" ? "hour" : "day";
-    const range = and(
-      gte(table.ts, new Date(query.from)),
-      lt(table.ts, new Date(query.to)),
-      eq(table.name, "pageview"),
-    );
+    const range = and(gte(table.ts, new Date(query.from)), lt(table.ts, new Date(query.to)), eq(table.name, "pageview"));
 
     // Decide whether to sample, then pick the source + column base to aggregate over.
     let sampled = false;
@@ -186,7 +182,12 @@ export const sqlAdapter = (options: SqlAdapterOptions): Adapter => {
       const size =
         dialect === "pg"
           ? num(
-              (await db.select({ n: sql<number>`count(*)::float8 * 100` }).from(sql`${events} TABLESAMPLE SYSTEM (1)`).where(range))[0]?.n,
+              (
+                await db
+                  .select({ n: sql<number>`count(*)::float8 * 100` })
+                  .from(sql`${events} TABLESAMPLE SYSTEM (1)`)
+                  .where(range)
+              )[0]?.n,
             )
           : num((await db.select({ total: count() }).from(events).where(range))[0]?.total);
 
@@ -219,7 +220,12 @@ export const sqlAdapter = (options: SqlAdapterOptions): Adapter => {
         .limit(limit),
       // Group/order by ordinal: the bucket expression renders differently in
       // SELECT vs GROUP BY, so referencing it by position keeps them identical.
-      db.select({ date: bucketExpr, views: count() }).from(source).where(where).groupBy(sql`1`).orderBy(sql`1`),
+      db
+        .select({ date: bucketExpr, views: count() })
+        .from(source)
+        .where(where)
+        .groupBy(sql`1`)
+        .orderBy(sql`1`),
     ]);
 
     const totals = totalsRes[0] ?? {};

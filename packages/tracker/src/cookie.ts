@@ -11,8 +11,7 @@ export interface CookieOptions {
 }
 
 /** Generate a random id (RFC 4122 UUID when available). Shared internal helper. */
-export const uuid = (): string =>
-  crypto.randomUUID?.() ?? `${Date.now()}-${Math.random().toString(36).slice(2)}`;
+export const uuid = (): string => crypto.randomUUID?.() ?? `${Date.now()}-${Math.random().toString(36).slice(2)}`;
 
 /** Read a cookie value by name, or undefined. Shared internal helper. */
 export const readCookie = (name: string): string | undefined => {
@@ -24,15 +23,9 @@ export const readCookie = (name: string): string | undefined => {
 };
 
 /** Write a cookie. Shared internal helper. `Secure` is added on HTTPS. */
-export const writeCookie = (
-  name: string,
-  value: string,
-  maxAgeSeconds: number,
-  sameSite: SameSite = "Lax",
-): void => {
+export const writeCookie = (name: string, value: string, maxAgeSeconds: number, sameSite: SameSite = "Lax"): void => {
   const secure = location.protocol === "https:" ? "; Secure" : "";
-  document.cookie =
-    `${name}=${encodeURIComponent(value)}; Max-Age=${maxAgeSeconds}; Path=/; SameSite=${sameSite}${secure}`;
+  document.cookie = `${name}=${encodeURIComponent(value)}; Max-Age=${maxAgeSeconds}; Path=/; SameSite=${sameSite}${secure}`;
 };
 
 /**

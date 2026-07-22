@@ -1,20 +1,8 @@
-import type {
-  Adapter,
-  CountedPath,
-  CountedReferrer,
-  StatsQuery,
-  StatsResult,
-  TimeseriesPoint,
-  TrackingEvent,
-} from "@unifeather/core";
+import type { Adapter, CountedPath, CountedReferrer, StatsQuery, StatsResult, TimeseriesPoint, TrackingEvent } from "@unifeather/core";
 
 /** Minimal shape of the Analytics Engine Workers binding (`env.<NAME>`). */
 export interface AnalyticsEngineDataset {
-  writeDataPoint(point: {
-    indexes?: string[];
-    blobs?: (string | null)[];
-    doubles?: number[];
-  }): void;
+  writeDataPoint(point: { indexes?: string[]; blobs?: (string | null)[]; doubles?: number[] }): void;
 }
 
 export interface AnalyticsEngineOptions {
@@ -44,8 +32,7 @@ const BLOBS = [
   "sessionId", // blob12
 ] as const satisfies readonly (keyof TrackingEvent)[];
 
-const SQL_URL = (accountId: string): string =>
-  `https://api.cloudflare.com/client/v4/accounts/${accountId}/analytics_engine/sql`;
+const SQL_URL = (accountId: string): string => `https://api.cloudflare.com/client/v4/accounts/${accountId}/analytics_engine/sql`;
 
 interface SqlResponse<T> {
   readonly data: readonly T[];
@@ -99,9 +86,7 @@ export const analyticsEngineAdapter = (options: AnalyticsEngineOptions): Adapter
         // visitors = distinct user ids (blob11); requires the cookieId/userId tracker option.
         `SELECT SUM(_sample_interval) AS views, COUNT(DISTINCT blob11) AS visitors, AVG(double1) AS avgActive FROM ${table} WHERE ${where}`,
       ),
-      runSql<CountedPath>(
-        `SELECT blob2 AS path, SUM(_sample_interval) AS views FROM ${table} WHERE ${where} GROUP BY path ORDER BY views DESC LIMIT ${limit}`,
-      ),
+      runSql<CountedPath>(`SELECT blob2 AS path, SUM(_sample_interval) AS views FROM ${table} WHERE ${where} GROUP BY path ORDER BY views DESC LIMIT ${limit}`),
       runSql<CountedReferrer>(
         `SELECT blob4 AS referrer, SUM(_sample_interval) AS views FROM ${table} WHERE ${where} AND blob4 != '' GROUP BY referrer ORDER BY views DESC LIMIT ${limit}`,
       ),

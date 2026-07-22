@@ -17,10 +17,7 @@ export interface HandlerOptions {
 
 export type FetchHandler = (request: Request) => Promise<Response>;
 
-const resolveOrigin = (
-  cors: HandlerOptions["cors"],
-  requestOrigin: string | null,
-): string | undefined => {
+const resolveOrigin = (cors: HandlerOptions["cors"], requestOrigin: string | null): string | undefined => {
   if (!cors) return undefined;
   if (cors === true) return requestOrigin ?? "*";
   const list = typeof cors === "string" ? [cors] : cors;
@@ -64,11 +61,7 @@ export const createHandler = (options: HandlerOptions): FetchHandler => {
   };
 };
 
-const handleCollect = async (
-  request: Request,
-  options: HandlerOptions,
-  cors: Record<string, string>,
-): Promise<Response> => {
+const handleCollect = async (request: Request, options: HandlerOptions, cors: Record<string, string>): Promise<Response> => {
   let body: RawEvent | readonly RawEvent[];
   try {
     body = (await request.json()) as RawEvent | readonly RawEvent[];
@@ -99,11 +92,7 @@ const handleCollect = async (
 
 const parseInterval = (value: string | null): Interval => (value === "hour" ? "hour" : "day");
 
-const handleStats = async (
-  url: URL,
-  adapter: Adapter,
-  cors: Record<string, string>,
-): Promise<Response> => {
+const handleStats = async (url: URL, adapter: Adapter, cors: Record<string, string>): Promise<Response> => {
   const params = url.searchParams;
   const now = Date.now();
   const query: StatsQuery = {
