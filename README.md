@@ -38,6 +38,19 @@ Opt-in attributes: `data-cookie-id`, `data-session`, `data-user-id="…"`,
 `data-props='{"plan":"pro"}'`. The created tracker is exposed as `window.unifeather`
 so you can send custom events: `window.unifeather?.track("signup")`.
 
+#### Snippet `data-*` attributes
+
+The copy-paste `<script>` snippet exposes a subset via `data-*` attributes (cookie
+and session are booleans only — for nested options use the NPM import):
+
+| Attribute | Description | Default / required |
+| --- | --- | --- |
+| `data-endpoint` | Collect endpoint URL. | **required** |
+| `data-user-id` | App-provided stable user id. | optional, none |
+| `data-cookie-id` | Enable the anonymous cookie id (`""` or `"true"` to enable). | optional, off |
+| `data-session` | Enable the session id (`""` or `"true"` to enable). | optional, off |
+| `data-props` | Custom properties as a JSON object, e.g. `'{"plan":"pro"}'`. Malformed JSON is ignored. | optional, none |
+
 ### Option B — NPM import (tree-shakeable)
 
 ```ts
@@ -59,6 +72,35 @@ rich.track("checkout", { value: 42 }); // custom event
 rich.pageview();                        // e.g. on SPA route change
 ```
 
+#### `createTracker(options)` — all parameters
+
+| Parameter | Description | Required |
+| --- | --- | --- |
+| `endpoint` | URL of the collect endpoint (e.g. `"https://analytics.example.com/collect"`). | **required** |
+| `userId` | App-provided stable user id (e.g. a logged-in user). Takes precedence over `cookieId`. | optional |
+| `cookieId` | Anonymous id in a long-lived first-party cookie. `true` for defaults, or a `CookieOptions` object. Ignored if `userId` is set. Opt-in, typically needs user consent. | optional |
+| `session` | Session id in a short-lived, sliding-expiry cookie. `true` for defaults, or a `SessionOptions` object. Opt-in. | optional |
+| `properties` | Custom properties object merged into every event. | optional |
+| `maxActiveMs` | Cap on measured active (foreground) time, in milliseconds. Defaults to `600000` (10 min). | optional |
+| `autoTrack` | Send a pageview automatically when the page is hidden/unloaded. Defaults to `true`. | optional |
+| `includeScreen` | Include screen width/height in events. Defaults to `true`. | optional |
+
+**`CookieOptions`** (passed to `cookieId`):
+
+| Parameter | Description | Default |
+| --- | --- | --- |
+| `name` | Cookie name. | `"uf_uid"` |
+| `maxAgeDays` | Cookie lifetime in days. | `365` |
+| `sameSite` | `SameSite` policy — `"Lax"` \| `"Strict"` \| `"None"`. | `"Lax"` |
+
+**`SessionOptions`** (passed to `session`):
+
+| Parameter | Description | Default |
+| --- | --- | --- |
+| `name` | Cookie name. | `"uf_sid"` |
+| `timeoutMinutes` | Inactivity timeout before the session cookie lapses (sliding). | `30` |
+| `sameSite` | `SameSite` policy — `"Lax"` \| `"Strict"` \| `"None"`. | `"Lax"` |
+
 ### Identifying visitors — three independent, opt-in options
 
 By default **no visitor identity is sent at all** (no cookies, no ids) — this is
@@ -68,7 +110,7 @@ the consent-free mode. When you do have consent, enable exactly what you need:
 | --- | --- | --- |
 | `userId: "…"` | Use an id you already have (e.g. a logged-in user). Takes precedence over `cookieId`. | none (you supply it) |
 | `cookieId: true` | Generate an **anonymous** id and persist it in a long-lived first-party cookie. | `uf_uid` cookie (365 d) |
-| `session: true` | Attach a **session** id in a short-lived, sliding-expiry cookie (30 min idle). | `uf_sid` cookie |
+| `session: true` | Attach a **session** id in a short-lived, sliding-expiry cookie (30 min idle). | `uf_sid` cookie (session) |
 
 The dashboard's distinct-visitor count is `COUNT(DISTINCT user_id)`, so it is only
 populated when `userId` or `cookieId` is in use; in consent-free mode you still get
