@@ -13,7 +13,11 @@
     "typecheck": "bun run --filter '@unifeather/core' build && bun run --filter '*' typecheck",
     "test": "bun test",
     "clean": "rm -rf packages/*/dist packages/*/*.tsbuildinfo",
-    "publish": "bun publish --cwd packages/core && bun publish --cwd packages/tracker && bun publish --cwd packages/server && bun publish --cwd packages/dashboard"
+    "publish": "bun publish --cwd packages/core && bun publish --cwd packages/tracker && bun publish --cwd packages/server && bun publish --cwd packages/dashboard",
+    "publish:core": "bun publish --cwd packages/core",
+    "publish:tracker": "bun publish --cwd packages/tracker",
+    "publish:server": "bun publish --cwd packages/server",
+    "publish:dashboard": "bun publish --cwd packages/dashboard"
   },
   "devDependencies": {
     "typescript": "^7.0.2"
