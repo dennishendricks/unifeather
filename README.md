@@ -3,12 +3,12 @@
 Lightweight, privacy-friendly, tree-shakeable website analytics. Three pieces you
 can host anywhere — Cloudflare Pages/Workers or your own Node server.
 
-| Package | What it is |
-| --- | --- |
-| [`@unifeather/tracker`](packages/tracker) | ~1 KB client script. Minimal by default; cookie id, session id and custom properties are opt-in. NPM import **or** copy-paste `<script>`. |
-| [`@unifeather/core`](packages/core) | Shared event schema, UA parser, normalization and the storage `Adapter` contract. |
-| [`@unifeather/server`](packages/server) | Framework-agnostic endpoint (`Request → Response`) + adapters for Cloudflare Analytics Engine and Drizzle-backed SQL. |
-| [`@unifeather/dashboard`](packages/dashboard) | Minimal Vue dashboard, embeddable as an Astro island. |
+| Package | What it is | npm version |
+| --- | --- | -- |
+| [`@unifeather/core`](packages/core) | Shared event schema, UA parser, normalization and the storage `Adapter` contract. Will be installed as subdependency with one of the other packages. | [![npm version](https://badge.fury.io/js/@unifeather%2Fcore.svg)](https://badge.fury.io/js/@unifeather%2Fcore) |
+| [`@unifeather/tracker`](packages/tracker) | ~1 KB client script. Minimal by default; cookie id, session id and custom properties are opt-in. NPM import **or** copy-paste `<script>`. | [![npm version](https://badge.fury.io/js/@unifeather%2Ftracker.svg)](https://badge.fury.io/js/@unifeather%2Ftracker) |
+| [`@unifeather/server`](packages/server) | Framework-agnostic endpoint (`Request → Response`) + adapters for Cloudflare Analytics Engine and Drizzle-backed SQL. | [![npm version](https://badge.fury.io/js/@unifeather%2Fserver.svg)](https://badge.fury.io/js/@unifeather%2Fserver) |
+| [`@unifeather/dashboard`](packages/dashboard) | Minimal Vue dashboard, embeddable as an Astro island. | [![npm version](https://badge.fury.io/js/@unifeather%2Fdashboard.svg)](https://badge.fury.io/js/@unifeather%2Fdashboard) |
 
 ## Design goals
 
@@ -19,6 +19,38 @@ can host anywhere — Cloudflare Pages/Workers or your own Node server.
   code runs on Cloudflare and on Node (`node:http`, Express, …).
 - **Tree-shakeable & publishable.** ESM, `sideEffects: false`, subpath exports,
   `.d.ts` types. You ship only the code you import.
+
+---
+
+## Installation
+
+Install whichever packages you need. `@unifeather/core` is a regular dependency
+of each and is installed automatically — no need to add it separately. For a
+full install of tracker, server and dashboard:
+
+**npm**
+
+```sh
+npm install @unifeather/tracker @unifeather/server @unifeather/dashboard
+```
+
+**pnpm**
+
+```sh
+pnpm add @unifeather/tracker @unifeather/server @unifeather/dashboard
+```
+
+**Yarn**
+
+```sh
+yarn add @unifeather/tracker @unifeather/server @unifeather/dashboard
+```
+
+**bun**
+
+```sh
+bun add @unifeather/tracker @unifeather/server @unifeather/dashboard
+```
 
 ---
 
